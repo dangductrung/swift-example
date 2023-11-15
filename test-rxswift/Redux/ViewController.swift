@@ -22,12 +22,17 @@ class ViewController: UIViewController, StoreSubscriber {
         super.init(nibName: nil, bundle: nil)
     }
     
+    func newState(state: AppState) {
+        // when the state changes, the UI is updated to reflect the current state
+        countLabel.text = "\(mainStore.state.counter)"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // subscribe to state changes
         mainStore.subscribe(self)
-        
+    
         addView()
         setConstraint()
         visualize()
@@ -109,10 +114,7 @@ class ViewController: UIViewController, StoreSubscriber {
             .disposed(by: disposeBag)
     }
     
-    func newState(state: AppState) {
-        // when the state changes, the UI is updated to reflect the current state
-        countLabel.text = "\(mainStore.state.counter)"
-    }
+
 
 }
 

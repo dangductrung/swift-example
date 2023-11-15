@@ -8,9 +8,9 @@ func counterReducer(action: Action, state: AppState?) -> AppState {
     
     switch action {
     case _ as CounterActionIncrease:
-        state.counter += 1
+        return state.increaseCounter(value: 1)
     case _ as CounterActionDecrease:
-        state.counter -= 1
+        return state.decreaseCounter(value: 1)
     default:
         break
     }
