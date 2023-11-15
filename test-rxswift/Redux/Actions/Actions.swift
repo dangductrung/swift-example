@@ -5,11 +5,11 @@ import RxSwift
 struct CounterActionIncrease: Action {}
 struct CounterActionDecrease: Action {}
 
-struct FetchCountryData: Action {
+class FetchCountryAction: Action {
     public var disposable: Disposable?
 }
 
-struct UpdateCountryData: Action {
+struct UpdateCountryAction: Action {
     public var countryList: String
 }
 

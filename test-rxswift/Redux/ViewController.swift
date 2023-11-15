@@ -22,18 +22,36 @@ class ViewController: UIViewController, StoreSubscriber {
         super.init(nibName: nil, bundle: nil)
     }
     
+    deinit {
+        fetchCountryAction.disposable?.dispose()
+    }
+    
+    func newState(state: AppState) {
+        // when the state changes, the UI is updated to reflect the current state
+        countLabel.text = "\(mainStore.state.counter)"
+        
+        switch mainStore.state.countryListState {
+            case .loading:
+                countryLabel.text = "Loading..."
+            case .success(let data):
+                countryLabel.text = data
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // subscribe to state changes
         mainStore.subscribe(self)
-        mainStore.dispatch(fetchCountryListThunk)
+        mainStore.dispatch(fetchCountryAction)
         
         addView()
         setConstraint()
         visualize()
         bind()
     }
+    
+    private var fetchCountryAction = FetchCountryAction()
     
     private var countLabel = UILabel()
     private var countryLabel = UILabel()
@@ -125,11 +143,7 @@ class ViewController: UIViewController, StoreSubscriber {
             .disposed(by: disposeBag)
     }
     
-    func newState(state: AppState) {
-        // when the state changes, the UI is updated to reflect the current state
-        countLabel.text = "\(mainStore.state.counter)"
-        countryLabel.text = mainStore.state.countryList
-    }
+ 
 
 }
 

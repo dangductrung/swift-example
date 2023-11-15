@@ -24,14 +24,3 @@ let decreaseThunk = Thunk<AppState> { dispatch, getState in
     dispatch(CounterActionDecrease())
 }
 
-let fetchCountryListThunk = Thunk<AppState> { dispatch, getState in
-    let apiCalling = DI.resolve(type: APICalling.self)
-    let result: Observable<[CountryListModel]> = apiCalling.send(apiRequest: APIRequest())
-    let disposable = result
-            .subscribe(
-                onNext: { countryList in
-                    let listData = countryList.map { $0.name }.joined(separator: ", ")
-                    dispatch(UpdateCountryData(countryList: listData))
-                }
-            )
-}

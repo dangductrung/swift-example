@@ -11,11 +11,10 @@ import ReSwift
 import ReSwiftThunk
 
 
-
 let mainStore = Store<AppState>(
     reducer: counterReducer,
     state: nil,
-    middleware: [thunkMiddleware]
+    middleware: [thunkMiddleware, apiMiddleware]
 )
 
 @main

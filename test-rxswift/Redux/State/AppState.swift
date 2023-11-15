@@ -1,6 +1,11 @@
 import ReSwift
 
-struct AppState: StateType {
+enum CountryListState {
+    case loading
+    case success(String)
+}
+
+struct AppState {
     var counter: Int = 0
-    var countryList: String = ""
+    var countryListState: CountryListState = .loading
 }
