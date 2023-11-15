@@ -37,12 +37,7 @@ class APICalling {
             AF.request(apiRequest.baseURL).response(completionHandler: { response in
                 do {
                     let model: CountryModel = try JSONDecoder().decode(CountryModel.self, from: response.data ?? Data())
-                    
-                    
-                    let isMainThread = Thread.isMainThread
-                    let threadName = isMainThread ? "Main Thread" : Thread.current.name
-                    print("\n\n 😀 Queue call API: \(threadName)")
-                    
+
                     observer.onNext(model.result as! T)
                 } catch let error {
                     observer.onError(error)

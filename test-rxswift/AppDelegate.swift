@@ -10,31 +10,13 @@ import CoreData
 import ReSwift
 import ReSwiftThunk
 
-let thunkMiddleware: Middleware<AppState> = createThunkMiddleware()
+
 
 let mainStore = Store<AppState>(
     reducer: counterReducer,
     state: nil,
     middleware: [thunkMiddleware]
 )
-
-
-
-let thunk = Thunk<AppState> { dispatch, getState in
-    
-    let a = 10
-//    if getState!.loading {
-//        return
-//    }
-//    dispatch(RequestStart())
-//    api.getSomething() { something in
-//        if something != nil {
-//            dispatch(RequestSuccess(something))
-//        } else {
-//            dispatch(RequestError())
-//        }
-//    }
-}
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -45,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         DI.register { APICalling.shared as APICalling }
-        mainStore.dispatch(thunk)
         
         return true
     }

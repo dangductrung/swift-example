@@ -1,4 +1,5 @@
 import ReSwift
+import RxSwift
 
 // the reducer is responsible for evolving the application state based
 // on the actions it receives
@@ -11,6 +12,8 @@ func counterReducer(action: Action, state: AppState?) -> AppState {
         state.counter += 1
     case _ as CounterActionDecrease:
         state.counter -= 1
+    case let data as UpdateCountryData:
+        state.countryList = data.countryList
     default:
         break
     }

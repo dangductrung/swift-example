@@ -27,6 +27,7 @@ class ViewController: UIViewController, StoreSubscriber {
         
         // subscribe to state changes
         mainStore.subscribe(self)
+        mainStore.dispatch(fetchCountryListThunk)
         
         addView()
         setConstraint()
@@ -35,6 +36,7 @@ class ViewController: UIViewController, StoreSubscriber {
     }
     
     private var countLabel = UILabel()
+    private var countryLabel = UILabel()
     private var stackView = UIStackView()
     private var increaseButton = UIButton()
     private var decreaseButton = UIButton()
@@ -43,6 +45,7 @@ class ViewController: UIViewController, StoreSubscriber {
     private func addView() {
         view.addSubview(countLabel)
         view.addSubview(stackView)
+        view.addSubview(countryLabel)
         stackView.addArrangedSubview(decreaseButton)
         stackView.addArrangedSubview(increaseButton)
     }
@@ -50,6 +53,13 @@ class ViewController: UIViewController, StoreSubscriber {
     private func setConstraint() {
         countLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
+        }
+        
+        countryLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(8)
+            make.top.equalToSuperview().offset(24)
+            make.centerX.equalToSuperview()
+            make.height.equalTo(150)
         }
         
         stackView.snp.makeConstraints { make in
@@ -74,6 +84,12 @@ class ViewController: UIViewController, StoreSubscriber {
         countLabel.textColor = .black
         countLabel.font = UIFont.systemFont(ofSize: 30)
         
+        countryLabel.text = "Loading..."
+        countryLabel.textColor = .black
+        countryLabel.font = UIFont.systemFont(ofSize: 16)
+        countryLabel.textAlignment = .center
+        countryLabel.numberOfLines = 0
+        
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
         stackView.spacing = 12
@@ -96,7 +112,7 @@ class ViewController: UIViewController, StoreSubscriber {
             .rx
             .tap
             .subscribe(onNext: {
-                mainStore.dispatch(CounterActionIncrease())
+                mainStore.dispatch(increaseThunk)
             })
             .disposed(by: disposeBag)
         
@@ -104,7 +120,7 @@ class ViewController: UIViewController, StoreSubscriber {
             .rx
             .tap
             .subscribe(onNext: {
-                mainStore.dispatch(CounterActionDecrease())
+                mainStore.dispatch(decreaseThunk)
             })
             .disposed(by: disposeBag)
     }
@@ -112,6 +128,7 @@ class ViewController: UIViewController, StoreSubscriber {
     func newState(state: AppState) {
         // when the state changes, the UI is updated to reflect the current state
         countLabel.text = "\(mainStore.state.counter)"
+        countryLabel.text = mainStore.state.countryList
     }
 
 }
