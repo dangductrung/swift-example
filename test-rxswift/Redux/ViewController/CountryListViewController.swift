@@ -20,14 +20,6 @@ extension CountryListViewController: StoreSubscriber {
 }
 
 class CountryListViewController: UIViewController {
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    public init() {
-        super.init(nibName: nil, bundle: nil)
-    }
-    
     deinit {
         fetchCountryAction.disposable?.dispose()
     }
@@ -38,13 +30,11 @@ class CountryListViewController: UIViewController {
         mainStore.subscribe(self, transform: {
             $0.select(CountryListViewState.init)
         })
-        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         mainStore.dispatch(fetchCountryAction)
-        
         setupView()
     }
     
@@ -54,6 +44,15 @@ class CountryListViewController: UIViewController {
     }
     
     private var fetchCountryAction = FetchCountryAction()
+    
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    public init() {
+        super.init(nibName: nil, bundle: nil)
+    }
     
     private var countryLabel = UILabel()
     private var disposeBag = DisposeBag()
