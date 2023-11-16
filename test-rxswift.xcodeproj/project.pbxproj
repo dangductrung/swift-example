@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		6102C2322B04AFCA001F6F96 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6102C22D2B04AFCA001F6F96 /* AppState.swift */; };
 		6102C2332B04AFCA001F6F96 /* Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6102C22F2B04AFCA001F6F96 /* Actions.swift */; };
-		6102C2342B04AFCA001F6F96 /* CounterReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6102C2312B04AFCA001F6F96 /* CounterReducer.swift */; };
+		6102C2342B04AFCA001F6F96 /* MainReducer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6102C2312B04AFCA001F6F96 /* MainReducer.swift */; };
 		6102C2362B04AFF7001F6F96 /* CountryListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6102C2352B04AFF7001F6F96 /* CountryListViewController.swift */; };
 		61044A312A6F754D00B15245 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61044A302A6F754D00B15245 /* AppDelegate.swift */; };
 		61044A332A6F754D00B15245 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61044A322A6F754D00B15245 /* SceneDelegate.swift */; };
@@ -63,7 +63,7 @@
 		1172F375AE20F77793F17252 /* Pods-test-rxswift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-test-rxswift.debug.xcconfig"; path = "Target Support Files/Pods-test-rxswift/Pods-test-rxswift.debug.xcconfig"; sourceTree = "<group>"; };
 		6102C22D2B04AFCA001F6F96 /* AppState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		6102C22F2B04AFCA001F6F96 /* Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Actions.swift; sourceTree = "<group>"; };
-		6102C2312B04AFCA001F6F96 /* CounterReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CounterReducer.swift; sourceTree = "<group>"; };
+		6102C2312B04AFCA001F6F96 /* MainReducer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainReducer.swift; sourceTree = "<group>"; };
 		6102C2352B04AFF7001F6F96 /* CountryListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListViewController.swift; sourceTree = "<group>"; };
 		61044A2D2A6F754D00B15245 /* test-rxswift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "test-rxswift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		61044A302A6F754D00B15245 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -161,7 +161,7 @@
 		6102C2302B04AFCA001F6F96 /* Reducers */ = {
 			isa = PBXGroup;
 			children = (
-				6102C2312B04AFCA001F6F96 /* CounterReducer.swift */,
+				6102C2312B04AFCA001F6F96 /* MainReducer.swift */,
 			);
 			path = Reducers;
 			sourceTree = "<group>";
@@ -522,7 +522,7 @@
 				61044A312A6F754D00B15245 /* AppDelegate.swift in Sources */,
 				6102C2322B04AFCA001F6F96 /* AppState.swift in Sources */,
 				61B8749E2B052A4A005AF1B0 /* HandleThunk.swift in Sources */,
-				6102C2342B04AFCA001F6F96 /* CounterReducer.swift in Sources */,
+				6102C2342B04AFCA001F6F96 /* MainReducer.swift in Sources */,
 				61044A332A6F754D00B15245 /* SceneDelegate.swift in Sources */,
 				61044A3B2A6F754D00B15245 /* test_rxswift.xcdatamodeld in Sources */,
 				612E9F5B2A7207AF00B32CA1 /* CountryListModel.swift in Sources */,

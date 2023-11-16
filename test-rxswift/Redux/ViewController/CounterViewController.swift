@@ -20,6 +20,18 @@ extension CounterViewController: StoreSubscriber {
 }
 
 class CounterViewController: UIViewController {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        mainStore.subscribe(self, transform: {
+            $0.select(CounterViewState.init)
+        })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        mainStore.unsubscribe(self)
+    }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -29,24 +41,10 @@ class CounterViewController: UIViewController {
     }
 
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        mainStore.subscribe(self, transform: {
-            $0.select(CounterViewState.init)
-        })
-        
-    }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupView()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        mainStore.unsubscribe(self)
     }
     
     private var countLabel = UILabel()

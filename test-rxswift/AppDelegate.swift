@@ -12,7 +12,7 @@ import ReSwiftThunk
 
 
 let mainStore = Store<AppState>(
-    reducer: counterReducer,
+    reducer: mainReducers,
     state: nil,
     middleware: [thunkMiddleware, apiMiddleware]
 )

@@ -20,8 +20,10 @@ extension CountryListViewController: StoreSubscriber {
 }
 
 class CountryListViewController: UIViewController {
-    deinit {
-        fetchCountryAction.disposable?.dispose()
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        mainStore.unsubscribe(self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -32,15 +34,15 @@ class CountryListViewController: UIViewController {
         })
     }
     
+    deinit {
+        fetchCountryAction.disposable?.dispose()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         mainStore.dispatch(fetchCountryAction)
+        
         setupView()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        mainStore.unsubscribe(self)
     }
     
     private var fetchCountryAction = FetchCountryAction()
