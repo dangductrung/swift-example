@@ -13,10 +13,12 @@ func counterReducer(action: Action, state: AppState?) -> AppState {
     case _ as CounterActionDecrease:
         state.counter -= 1
     case let data as UpdateCountryAction:
-            state.countryListState = CountryListState.success(data.countryList)
+        state.countryListState = CountryListState.success(data.countryList)
     default:
         break
     }
     
     return state
 }
+
+

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  CounterViewController.swift
 //  CounterExample
 //
 //  Created by Colin Eberhardt on 04/08/2016.
@@ -11,9 +11,15 @@ import ReSwift
 import SnapKit
 import RxSwift
 
-class ViewController: UIViewController, StoreSubscriber {
-    typealias StoreSubscriberStateType = AppState
+extension CounterViewController: StoreSubscriber {
+    typealias StoreSubscriberStateType = CounterViewState
+    
+    func newState(state: CounterViewState) {
+        countLabel.text = "\(state.count)"
+    }
+}
 
+class CounterViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -21,29 +27,35 @@ class ViewController: UIViewController, StoreSubscriber {
     public init() {
         super.init(nibName: nil, bundle: nil)
     }
+
     
-    deinit {
-        fetchCountryAction.disposable?.dispose()
-    }
-    
-    func newState(state: AppState) {
-        // when the state changes, the UI is updated to reflect the current state
-        countLabel.text = "\(mainStore.state.counter)"
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        switch mainStore.state.countryListState {
-            case .loading:
-                countryLabel.text = "Loading..."
-            case .success(let data):
-                countryLabel.text = data
-        }
+        mainStore.subscribe(self, transform: {
+            $0.select(CounterViewState.init)
+        })
+        
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // subscribe to state changes
-        mainStore.subscribe(self)
-        mainStore.dispatch(fetchCountryAction)
+        setupView()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        mainStore.unsubscribe(self)
+    }
+    
+    private var countLabel = UILabel()
+    private var stackView = UIStackView()
+    private var increaseButton = UIButton()
+    private var decreaseButton = UIButton()
+    private var disposeBag = DisposeBag()
+    
+    private func setupView() {
         
         addView()
         setConstraint()
@@ -51,19 +63,9 @@ class ViewController: UIViewController, StoreSubscriber {
         bind()
     }
     
-    private var fetchCountryAction = FetchCountryAction()
-    
-    private var countLabel = UILabel()
-    private var countryLabel = UILabel()
-    private var stackView = UIStackView()
-    private var increaseButton = UIButton()
-    private var decreaseButton = UIButton()
-    private var disposeBag = DisposeBag()
-    
     private func addView() {
         view.addSubview(countLabel)
         view.addSubview(stackView)
-        view.addSubview(countryLabel)
         stackView.addArrangedSubview(decreaseButton)
         stackView.addArrangedSubview(increaseButton)
     }
@@ -71,13 +73,6 @@ class ViewController: UIViewController, StoreSubscriber {
     private func setConstraint() {
         countLabel.snp.makeConstraints { make in
             make.center.equalToSuperview()
-        }
-        
-        countryLabel.snp.makeConstraints { make in
-            make.leading.trailing.equalToSuperview().inset(8)
-            make.top.equalToSuperview().offset(24)
-            make.centerX.equalToSuperview()
-            make.height.equalTo(150)
         }
         
         stackView.snp.makeConstraints { make in
@@ -101,12 +96,6 @@ class ViewController: UIViewController, StoreSubscriber {
         countLabel.text = "0"
         countLabel.textColor = .black
         countLabel.font = UIFont.systemFont(ofSize: 30)
-        
-        countryLabel.text = "Loading..."
-        countryLabel.textColor = .black
-        countryLabel.font = UIFont.systemFont(ofSize: 16)
-        countryLabel.textAlignment = .center
-        countryLabel.numberOfLines = 0
         
         stackView.axis = .horizontal
         stackView.distribution = .fillEqually
@@ -142,8 +131,5 @@ class ViewController: UIViewController, StoreSubscriber {
             })
             .disposed(by: disposeBag)
     }
-    
- 
-
 }
 
